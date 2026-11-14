@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6b63">
+<title>RegistraObra</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="lock" class="lock hidden">
+  <div class="lock-card">
+    <h1>RegistraObra</h1>
+    <p>Ingrese su clave</p>
+    <input id="lockPin" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
+    <button id="lockBtn" class="btn primary">Ingresar</button>
+    <p id="lockMsg" class="msg err"></p>
+  </div>
+</div>
+
+<header class="top no-print">
+  <div class="top-row">
+    <div>
+      <div class="brand">REGISTRAOBRA</div>
+      <div id="subtitle" class="sub">Parque Pampahuasi</div>
+    </div>
+    <span id="netBadge" class="badge off">Sin conexión</span>
+  </div>
+  <div class="top-row small">
+    <span id="pendingTxt">0 registros pendientes de sincronizar</span>
+    <button id="syncBtn" class="btn ghost sm">Sincronizar</button>
+  </div>
+</header>
+
+<main id="view" class="no-print"></main>
+<div id="printArea"></div>
+<div id="toast" class="toast hidden"></div>
+
+<nav class="bottom no-print">
+  <button data-go="asistencia"><span class="ic">✓</span>Asistencia</button>
+  <button data-go="ssoma"><span class="ic">⛑</span>SSOMA</button>
+  <button data-go="agua"><span class="ic">💧</span>Agua</button>
+  <button data-go="expediente"><span class="ic">📄</span>Expediente</button>
+  <button data-go="mas"><span class="ic">☰</span>Más</button>
+</nav>
+
+<script src="db.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

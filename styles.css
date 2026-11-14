@@ -1,0 +1,109 @@
+:root {
+  --teal: #0f6b63; --teal-d: #0b524c; --teal-l: #e3f1ee; --ink: #1f2a2a; --gray: #5f6b6b;
+  --line: #d5dfdd; --bg: #f3f6f5; --red: #c0392b; --red-l: #fbe5e2; --amber: #b8740a; --amber-l: #fff4d2;
+  --green: #1e8a4c; --green-l: #e1f4e8;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Arial, "Liberation Sans", Helvetica, sans-serif; color: var(--ink); background: var(--bg); font-size: 16px; }
+.hidden { display: none !important; }
+button { font: inherit; cursor: pointer; }
+input, select, textarea { font: inherit; width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); }
+label { display: block; font-size: 14px; font-weight: bold; margin: 12px 0 4px; color: var(--gray); }
+
+.top { position: sticky; top: 0; z-index: 5; background: var(--teal); color: #fff; padding: 12px 16px 10px; }
+.top-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.top-row.small { margin-top: 8px; font-size: 13px; }
+.brand { font-size: 21px; letter-spacing: .5px; }
+.sub { font-size: 13px; opacity: .9; }
+.badge { font-size: 13px; font-weight: bold; padding: 5px 10px; border-radius: 99px; white-space: nowrap; }
+.badge.off { background: #fff1d6; color: #8a5200; }
+.badge.on { background: #dff5e7; color: #12623a; }
+.badge::before { content: "●"; margin-right: 5px; }
+
+main { padding: 14px 14px 96px; max-width: 720px; margin: 0 auto; }
+.card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.card h2 { margin: 0 0 6px; font-size: 20px; letter-spacing: .3px; }
+.card h3 { margin: 14px 0 6px; font-size: 16px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--gray); font-size: 14px; }
+.code { font-family: "DejaVu Sans Mono", Consolas, monospace; background: var(--teal-l); color: var(--teal-d); padding: 3px 8px; border-radius: 6px; font-size: 14px; }
+.pill { font-size: 13px; font-weight: bold; padding: 4px 10px; border-radius: 99px; }
+.pill.ok { background: var(--green-l); color: var(--green); }
+.pill.bad { background: var(--red-l); color: var(--red); }
+.pill.warn { background: var(--amber-l); color: var(--amber); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn { border: none; border-radius: 10px; padding: 12px 16px; font-weight: bold; letter-spacing: .3px; }
+.btn.primary { background: var(--teal); color: #fff; width: 100%; margin-top: 16px; font-size: 16px; }
+.btn.primary:active { background: var(--teal-d); }
+.btn.sec { background: var(--teal-l); color: var(--teal-d); }
+.btn.danger { background: var(--red-l); color: var(--red); }
+.btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.6); }
+.btn.sm { padding: 5px 10px; font-size: 13px; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.hint { font-size: 13px; color: var(--gray); margin: 8px 0 0; }
+
+.grid-p { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 10px; }
+.pbtn { border: 1.5px solid #bfe0d6; background: var(--green-l); color: var(--green); border-radius: 8px; padding: 9px 0; font-weight: bold; font-size: 14px; }
+.pbtn.off { background: var(--red-l); border-color: #f0c2bb; color: var(--red); text-decoration: line-through; }
+.list { list-style: none; margin: 8px 0 0; padding: 0; }
+.list li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.list li:last-child { border-bottom: none; }
+.checks li { justify-content: flex-start; }
+.ok-ic, .bad-ic, .warn-ic { font-size: 12px; font-weight: bold; padding: 3px 7px; border-radius: 6px; min-width: 34px; text-align: center; }
+.ok-ic { background: var(--green-l); color: var(--green); }
+.bad-ic { background: var(--red-l); color: var(--red); }
+.warn-ic { background: var(--amber-l); color: var(--amber); }
+.msg { font-size: 14px; margin-top: 10px; }
+.msg.err { color: var(--red); font-weight: bold; }
+.msg.ok { color: var(--green); font-weight: bold; }
+.errors { background: var(--red-l); color: var(--red); border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 14px; }
+.errors ul { margin: 4px 0 0 18px; padding: 0; }
+.kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kpi div { background: var(--bg); border-radius: 10px; padding: 12px; }
+.kpi b { display: block; font-size: 24px; color: var(--teal-d); }
+.kpi span { font-size: 13px; color: var(--gray); }
+table.mini { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+table.mini th, table.mini td { border-bottom: 1px solid var(--line); padding: 7px 4px; text-align: left; }
+table.mini th { color: var(--gray); font-size: 13px; }
+.timer { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 30px; text-align: center; margin: 10px 0; color: var(--teal-d); }
+.chk { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.chk input { width: auto; transform: scale(1.3); }
+.daytag { display: inline-block; min-width: 24px; text-align: center; padding: 2px 6px; margin: 0 2px; border-radius: 5px; font-size: 12px; font-weight: bold; background: #e9eeee; color: #8a9696; }
+.daytag.on { background: var(--green-l); color: var(--green); }
+
+nav.bottom { position: fixed; bottom: 0; left: 0; right: 0; display: grid; grid-template-columns: repeat(5, 1fr); background: #fff; border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 5; }
+nav.bottom button { border: none; background: none; padding: 8px 0 9px; font-size: 11.5px; font-weight: bold; color: #7d8a89; letter-spacing: .3px; text-transform: uppercase; }
+nav.bottom button .ic { display: block; font-size: 19px; margin-bottom: 2px; }
+nav.bottom button.active { color: var(--teal); }
+.toast { position: fixed; left: 50%; bottom: 86px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 11px 18px; border-radius: 10px; font-size: 14px; z-index: 20; max-width: 90%; text-align: center; }
+.lock { position: fixed; inset: 0; background: var(--teal); z-index: 50; display: flex; align-items: center; justify-content: center; }
+.lock-card { background: #fff; border-radius: 14px; padding: 24px; width: 290px; text-align: center; }
+.lock-card h1 { margin: 0 0 6px; color: var(--teal); font-size: 22px; }
+#printArea { display: none; }
+
+/* ---------- Impresión del expediente (A4) ---------- */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 14mm; }
+  body { background: #fff; font-size: 11pt; }
+  .no-print, nav.bottom, header.top, main, .toast, .lock { display: none !important; }
+  #printArea { display: block; }
+}
+.sheet { background: #fff; width: 100%; page-break-after: always; break-after: page; position: relative; font-size: 10.5pt; color: #000; }
+.sheet:last-child { page-break-after: auto; break-after: auto; }
+.sheet .folio { position: absolute; top: 0; right: 0; font-size: 10pt; font-weight: bold; border: 1px solid #000; padding: 2px 8px; }
+.sheet .prog { text-align: left; font-size: 9.5pt; color: #333; margin: 0 0 6px; padding-right: 110px; min-height: 18px; }
+.sheet h1 { text-align: center; font-size: 13pt; margin: 10px 0 8px; text-decoration: underline; }
+.sheet h2 { font-size: 11pt; margin: 8px 0; }
+.sheet p { margin: 4px 0; text-align: justify; line-height: 1.35; }
+.sheet table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.sheet th, .sheet td { border: 1px solid #000; padding: 2px 5px; font-size: 9.5pt; height: 30px; }
+.sheet th { height: auto; padding: 4px 5px; }
+.sheet td.n { width: 5%; } .sheet td.dni { width: 11%; } .sheet td.f { width: 15%; }
+.sheet th { background: #e8e8e8; }
+.sheet td.c, .sheet th.c { text-align: center; }
+.sheet .firmas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 46px; text-align: center; font-size: 9pt; }
+.sheet .firmas div { border-top: 1px solid #000; padding-top: 4px; }
+.sheet .cont { font-size: 9pt; font-style: italic; text-align: right; margin-top: 4px; }
+.sheet .idx td { height: 22px; }
+.screen-preview .sheet { border: 1px solid var(--line); padding: 14mm; margin: 0 auto 16px; max-width: 210mm; min-height: 280mm; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
