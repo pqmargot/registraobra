@@ -841,7 +841,7 @@ VIEWS.mas = async () => {
       <li><span><b>Datos y respaldo</b><br><small>Compartir respaldo, exportar CSV/JSON, restaurar</small></span><button class="btn sec sm" data-g="datos">Abrir</button></li>
       <li><span><b>Configuración</b><br><small>Proyecto, responsables, sincronización y clave</small></span><button class="btn sec sm" data-g="config">Abrir</button></li>
     </ul>
-    <p class="hint">RegistraObra v1.2 · funciona sin Internet · datos protegidos según la Ley N.° 29733.</p>
+    <p class="hint">RegistraObra v1.2.1 · funciona sin Internet · datos protegidos según la Ley N.° 29733.</p>
   </div>`;
   $('#view').onclick = e => { const b = e.target.closest('[data-g]'); if (b) go(b.dataset.g); };
 };
@@ -1058,8 +1058,8 @@ VIEWS.datos = async () => {
       <button class="btn sec" id="eJ">Respaldo completo (JSON)</button>
     </div>
     <h3>Restaurar respaldo</h3>
-    <input type="file" id="fJ" accept="application/json,.json">
-    <p class="hint">Reemplaza todos los datos del celular por los del archivo.</p>
+    <input type="file" id="fJ" accept="application/json,.json,text/plain,.txt">
+    <p class="hint">Acepta el respaldo completo (.json) o el respaldo rápido (.txt). Reemplaza todos los datos del celular por los del archivo.</p>
     <div id="msg"></div>
   </div>`;
   const stamp = today();
@@ -1074,12 +1074,13 @@ VIEWS.datos = async () => {
   $('#eE').onclick = async () => { const e = await DB.all('entregas'); descargar(`entregas_${stamp}.csv`, csv([['semana', 'fecha_entrega', 'documentos', 'folios', 'resultado', 'motivo', 'documentos_observados', 'fecha_respuesta'], ...e.map(x => [x.semana, x.fechaEntrega, x.documentos, x.folios, x.resultado || 'en revisión', x.motivo, x.observados, x.fechaRespuesta || ''])]), 'text/csv'); };
   $('#eV').onclick = async () => { const e = await DB.all('eventos'); descargar(`eventos_${stamp}.csv`, csv([['momento', 'tipo', 'detalle'], ...e.map(x => [x.t, x.tipo, JSON.stringify(x.detalle)])]), 'text/csv'); };
   $('#eS').onclick = async () => {
-    const nombre = `respaldo_registraobra_${stamp}.json`, txt = JSON.stringify(await DB.dump());
-    let file = null; try { file = new File([txt], nombre, { type: 'application/json' }); } catch (_) { }
+    // Chrome de Android solo comparte ciertos tipos de archivo (no .json): el respaldo se envía como .txt con el mismo contenido
+    const nombre = `respaldo_registraobra_${stamp}.txt`, txt = JSON.stringify(await DB.dump());
+    let file = null; try { file = new File([txt], nombre, { type: 'text/plain' }); } catch (_) { }
     if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
       try { await navigator.share({ files: [file], title: 'Respaldo RegistraObra', text: `Respaldo de RegistraObra · ${CFG.corto} · ${dmy(today())}` }); await logEvent('respaldo_compartido', { bytes: txt.length }); toast('Respaldo compartido.'); }
-      catch (err) { if (err.name !== 'AbortError') { descargar(nombre, txt, 'application/json'); toast('No se pudo compartir: se descargó el archivo.'); } }
-    } else { descargar(nombre, txt, 'application/json'); await logEvent('respaldo_descargado', { bytes: txt.length }); toast('Este navegador no permite compartir archivos: se descargó el respaldo.'); }
+      catch (err) { if (err.name !== 'AbortError') { descargar(nombre, txt, 'text/plain'); toast('No se pudo compartir: se descargó el archivo.'); } }
+    } else { descargar(nombre, txt, 'text/plain'); await logEvent('respaldo_descargado', { bytes: txt.length }); toast('Este navegador no permite compartir archivos: se descargó el respaldo.'); }
   };
   $('#eJ').onclick = async () => { descargar(`respaldo_registraobra_${stamp}.json`, JSON.stringify(await DB.dump(), null, 1), 'application/json'); };
   $('#fJ').onchange = async e => {
