@@ -1,21 +1,28 @@
 /* Capa de datos: IndexedDB nativo (sin librerías externas). Todo se guarda en el celular. */
 const DB = (() => {
-  const NAME = 'registraobra', VERSION = 1;
+  const NAME = 'registraobra', VERSION = 3;
   let dbp = null;
   function open() {
     if (dbp) return dbp;
     dbp = new Promise((res, rej) => {
       const r = indexedDB.open(NAME, VERSION);
-      r.onupgradeneeded = () => {
+      r.onupgradeneeded = (ev) => {
         const db = r.result;
-        db.createObjectStore('config', { keyPath: 'k' });
-        db.createObjectStore('participantes', { keyPath: 'id', autoIncrement: true });
-        const reg = db.createObjectStore('registros', { keyPath: 'id' });
-        reg.createIndex('tipo', 'tipo');
-        reg.createIndex('fecha', 'fecha');
-        db.createObjectStore('tiempos', { keyPath: 'id', autoIncrement: true });
-        db.createObjectStore('entregas', { keyPath: 'id', autoIncrement: true });
-        db.createObjectStore('eventos', { keyPath: 'id', autoIncrement: true });
+        const has = n => db.objectStoreNames.contains(n);
+        if (!has('config')) db.createObjectStore('config', { keyPath: 'k' });
+        if (!has('participantes')) db.createObjectStore('participantes', { keyPath: 'id', autoIncrement: true });
+        if (!has('registros')) {
+          const reg = db.createObjectStore('registros', { keyPath: 'id' });
+          reg.createIndex('tipo', 'tipo');
+          reg.createIndex('fecha', 'fecha');
+        }
+        if (!has('tiempos')) db.createObjectStore('tiempos', { keyPath: 'id', autoIncrement: true });
+        if (!has('entregas')) db.createObjectStore('entregas', { keyPath: 'id', autoIncrement: true });
+        if (!has('eventos')) db.createObjectStore('eventos', { keyPath: 'id', autoIncrement: true });
+        // v2: fotos para el panel fotográfico
+        if (!has('fotos')) { const f = db.createObjectStore('fotos', { keyPath: 'id', autoIncrement: true }); f.createIndex('ref', 'ref'); }
+        // v3: días no laborables (feriados, lluvia, paralización)
+        if (!has('nolab')) db.createObjectStore('nolab', { keyPath: 'fecha' });
       };
       r.onsuccess = () => res(r.result);
       r.onerror = () => rej(r.error);
@@ -46,11 +53,11 @@ const DB = (() => {
     setConfig(k, v) { return this.put('config', { k, v }); },
     async dump() {
       const out = {};
-      for (const s of ['config', 'participantes', 'registros', 'tiempos', 'entregas', 'eventos']) out[s] = await this.all(s);
+      for (const s of ['config', 'participantes', 'registros', 'tiempos', 'entregas', 'eventos', 'fotos', 'nolab']) out[s] = await this.all(s);
       return out;
     },
     async restore(data) {
-      for (const s of ['config', 'participantes', 'registros', 'tiempos', 'entregas', 'eventos']) {
+      for (const s of ['config', 'participantes', 'registros', 'tiempos', 'entregas', 'eventos', 'fotos', 'nolab']) {
         if (!data[s]) continue;
         await this.clear(s);
         for (const v of data[s]) await this.put(s, v);

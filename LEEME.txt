@@ -1,0 +1,59 @@
+REGISTRAOBRA v1.2 – Gestión documental Offline-First (Proyecto Pampahuasi, CUI 2236116)
+=====================================================================================
+
+QUÉ HACE
+- Registra asistencia, charlas SSOMA y la entrega de agua SIN INTERNET (todo se guarda en el celular).
+- Numera solo (RA-2026-001, CH-2026-001, AA-2026-001) y bloquea fechas futuras, domingos y campos vacíos.
+- Revisa el expediente de la semana (8 controles) y genera el índice foliado y todos los formatos para
+  imprimir o guardar en PDF. Las firmas, huellas y sellos se siguen poniendo sobre el papel.
+- Cronómetro de actividades e indicadores del piloto (KPI-1, KPI-2, KPI-3, KPI-5) y exportación a Excel (CSV).
+- Sincroniza con Google Sheets cuando vuelve la señal (opcional) y tiene clave de acceso (Ley 29733).
+
+ARCHIVOS
+index.html, styles.css, db.js, app.js  -> la aplicación (sin librerías externas)
+sw.js, manifest.json, icon-*.png       -> funcionamiento sin conexión e instalación en el celular
+apps-script/Code.gs                    -> receptor de sincronización para Google Sheets (opcional)
+
+PUBLICARLA GRATIS EN GITHUB PAGES (unos 10 minutos)
+1. Cree una cuenta en github.com (si no tiene) e inicie sesión.
+2. Botón "New repository" -> nombre: registraobra -> Public -> Create repository.
+3. En el repositorio: "uploading an existing file" -> arrastre TODOS los archivos de esta carpeta
+   (index.html, styles.css, db.js, app.js, sw.js, manifest.json, icon-192.png, icon-512.png) -> Commit changes.
+4. Settings -> Pages -> Source: "Deploy from a branch" -> Branch: main / (root) -> Save.
+5. Espere 1–2 minutos. La dirección será: https://SU-USUARIO.github.io/registraobra/
+   (Los datos NO se suben a GitHub: solo el programa. Los registros quedan en cada celular.)
+
+INSTALARLA EN EL CELULAR (Android, Chrome)
+1. Con señal (por ejemplo en la oficina o el pueblo), abra la dirección en Chrome.
+2. Menú ⋮ -> "Instalar aplicación" o "Agregar a la pantalla principal".
+3. Ábrala una vez con señal. Desde ese momento funciona sin Internet en la obra.
+4. Primera vez: Más -> Configuración (responsables y clave) y Más -> Participantes (pegar la lista desde Excel).
+
+SINCRONIZACIÓN CON GOOGLE SHEETS (opcional)
+1. Cree una hoja de cálculo en Google Drive -> Extensiones -> Apps Script.
+2. Pegue el contenido de apps-script/Code.gs y guarde.
+3. Implementar -> Nueva implementación -> Tipo: Aplicación web -> Ejecutar como: Yo ->
+   Quién tiene acceso: Cualquier persona -> Implementar -> autorice -> copie la URL que termina en /exec.
+4. En la app: Más -> Configuración -> "URL del Apps Script" -> pegue la URL -> Guardar.
+Si no configura esto, use Más -> Datos y respaldo -> "Respaldo completo (JSON)" cada día como copia de seguridad.
+
+PROTECCIÓN DE DATOS (Ley N.° 29733)
+- La lista de participantes solo se guarda en el celular. No la publique ni la comparta por redes.
+- Active la clave en Configuración. No use los nombres reales en capturas para el informe.
+
+NOVEDADES DE LA VERSIÓN 1.2
+- Días no laborables: en Asistencia → "Marcar un día como no laborable" (feriado, lluvia, paralización).
+  La app avisa cuando la fecha es feriado nacional. Ese día no se exige asistencia, charla ni agua, y el
+  expediente lo indica en el índice y en el acta de agua (columna "NO LAB.").
+- Asistencia: buscador; tocar = falta con motivo (injustificada, descanso médico, permiso, reemplazo);
+  mantener presionado = tardanza o medio día. Se imprimen en el formato.
+- Días anteriores en solo lectura: para corregir, "Editar" y confirmar (queda registrado en el historial).
+- Bloqueo cruzado: quien tiene falta ese día queda bloqueado en la charla SSOMA y en la entrega de agua.
+- Agua: total entregado del día y acumulado de la semana (personas × litros).
+- Participantes: Baja, Reemplazar (mismo N.° o nuevo correlativo) y Reactivar, sin perder el historial.
+- Expediente: botón "Vista previa" antes de generar.
+- Datos: "Compartir respaldo rápido" (WhatsApp, correo) usando el menú Compartir del celular.
+- Sincroniza sola al volver la señal (espera 3 s), al volver a la app y cada minuto si hay pendientes.
+- Mayor contraste para usar al sol. La clave se abre sola al escribir los 4 dígitos correctos.
+Actualizar en GitHub: subir index.html, app.js, db.js, styles.css, sw.js y apps-script/Code.gs.
+Los datos guardados en el celular se conservan al actualizar.
